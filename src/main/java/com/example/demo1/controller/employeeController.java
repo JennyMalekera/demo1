@@ -24,6 +24,7 @@ public class employeeController {
 
         return this.employeeRepository.findAll();
     }
+
 //create
     @PostMapping("/create")
     public Employee createEmployee(@RequestBody Employee employee ){
@@ -31,6 +32,16 @@ public class employeeController {
     return this.employeeRepository.save(employee);
 
     }
+
+    @PostMapping("/login")
+    public String loginEmployee(@RequestBody Employee employee){
+        int emp = employeeRepository.login(employee.getUsername(), employee.getPassword());
+        if(emp==0){
+            return "Invalid Username or Password";
+        }
+        return "Successfully logged In";
+
+    };
 //update
     @PutMapping ("/edit/{id}")
     public ResponseEntity<Employee> editEmployee(@PathVariable(value="id") int employeeId,@RequestBody Employee employee ) {
@@ -48,7 +59,6 @@ public class employeeController {
         employeeRepository.deleteById(employeeId);
 
     }
-
 
 
 
